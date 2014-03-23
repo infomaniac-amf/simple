@@ -10,6 +10,7 @@ Model.prototype = {
 
     set: function(name, value) {
         if(!(name in this.properties)) {
+            debugger;
             throw new Error('Undefined property: ' + name);
         }
         this.properties[name] = value;

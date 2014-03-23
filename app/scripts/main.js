@@ -5,6 +5,13 @@ $(function () {
 
     $('button.amf').click(submitAMF);
     $('button.json').click(submitJSON);
+
+    $('#addBtn').click(function() {
+        $('#siblingsTmpl').clone()
+            .appendTo($('#siblingsForm'))
+            .removeAttr('id')
+            .removeClass('hidden');
+    });
 });
 
 var displayInfo = function (user) {
@@ -12,7 +19,9 @@ var displayInfo = function (user) {
     var text = user.get('firstName') + ' ' + user.get('lastName')
         + ' has signed up with an email address of ' + user.get('emailAddress')
         + '. ' + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
-        + (user.get('spamMe') ? '' : 'not') + ' agreed to be spammed.';
+        + (user.get('spamMe') ? '' : 'not') + ' agreed to be spammed. '
+        + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
+        + user.get('siblings').length + ' siblings';
 
     infoBox.text(text);
     infoBox.show();
@@ -27,7 +36,21 @@ var getUserData = function () {
     user.set('spamMe', $('#spamMe').is(':checked'));
     user.set('gender', $('input[name="gender"]:checked').val());
 
+    user.set('siblings', getSiblings());
+
     return user;
+};
+
+var getSiblings = function() {
+    var fields = $('#siblingsForm input');
+    var siblings = [];
+
+    $.each(fields, function(i, field) {
+        var sibling = new Sibling({name: $(field).val()});
+        siblings.push(sibling);
+    });
+
+    return siblings;
 };
 
 /**

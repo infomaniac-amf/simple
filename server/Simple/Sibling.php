@@ -3,16 +3,9 @@ namespace Simple;
 
 use Infomaniac\AMF\ISerializable;
 
-class User implements ISerializable
+class Sibling implements ISerializable
 {
-    public $firstName;
-    public $lastName;
-    public $emailAddress;
-    public $password;
-    public $spamMe;
-    public $gender;
-
-    public $siblings;
+    public $name;
 
     /**
      * Return an associative array of class properties
@@ -22,13 +15,7 @@ class User implements ISerializable
     public function export()
     {
         return array(
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-            'emailAddress' => $this->emailAddress,
-            'spamMe' => $this->spamMe,
-            'gender' => $this->gender,
-
-            'siblings' => $this->siblings,
+            'name' => $this->name
         );
     }
 

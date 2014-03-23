@@ -87,3 +87,8 @@ body {
         border-bottom: 0;
     }
 }
+
+.box {
+    border: 1px solid #CCC;
+    padding: 10px;
+}

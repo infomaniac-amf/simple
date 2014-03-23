@@ -5,7 +5,7 @@ var User = function (params) {
     console.log('new user instance');
 };
 
-User.prototype = Model.prototype;
+User.prototype = new Model();
 User.prototype.constructor = User;
 User.prototype._classMapping = 'Simple\\User';
 User.prototype.properties = {
@@ -14,7 +14,9 @@ User.prototype.properties = {
     emailAddress: null,
     password: null,
     spamMe: false,
-    gender: null
+    gender: null,
+
+    siblings: []
 };
 
 AMF.registerClassAlias('Simple\\User', User);
