@@ -15,6 +15,7 @@ User.prototype.properties = {
     password: null,
     spamMe: false,
     gender: null,
+    birthday: new Date(),
 
     siblings: []
 };

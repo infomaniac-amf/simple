@@ -11,6 +11,7 @@ class User implements ISerializable
     public $password;
     public $spamMe;
     public $gender;
+    public $birthday;
 
     public $siblings;
 
@@ -27,6 +28,7 @@ class User implements ISerializable
             'emailAddress' => $this->emailAddress,
             'spamMe' => $this->spamMe,
             'gender' => $this->gender,
+            'birthday' => $this->birthday,
 
             'siblings' => $this->siblings,
         );

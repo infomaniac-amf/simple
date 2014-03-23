@@ -6,6 +6,7 @@ use Infomaniac\AMF\ISerializable;
 class Sibling implements ISerializable
 {
     public $name;
+    public $user;
 
     /**
      * Return an associative array of class properties
@@ -15,7 +16,8 @@ class Sibling implements ISerializable
     public function export()
     {
         return array(
-            'name' => $this->name
+            'name' => $this->name,
+            'user' => $this->user
         );
     }
 

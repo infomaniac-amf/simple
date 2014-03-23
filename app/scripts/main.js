@@ -21,10 +21,24 @@ var displayInfo = function (user) {
         + '. ' + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
         + (user.get('spamMe') ? '' : 'not') + ' agreed to be spammed. '
         + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
-        + user.get('siblings').length + ' siblings';
+        + user.get('siblings').length + ' siblings. Born on ' + user.get('birthday');
 
     infoBox.text(text);
     infoBox.show();
+
+    console.log(user.get('birthday'));
+};
+
+var getBirthday = function() {
+    var year = $('#year').val(),
+        month = parseInt($('#month').val()) - 1, // ya, i know
+        day = $('#day').val();
+
+    if(!year || month < 0 || !day) {
+        return null;
+    }
+
+    return new Date(year, month, day);
 };
 
 var getUserData = function () {
@@ -35,18 +49,22 @@ var getUserData = function () {
     user.set('password', $('#password').val());
     user.set('spamMe', $('#spamMe').is(':checked'));
     user.set('gender', $('input[name="gender"]:checked').val());
+    user.set('birthday', getBirthday());
 
-    user.set('siblings', getSiblings());
+    user.set('siblings', getSiblings(user));
 
     return user;
 };
 
-var getSiblings = function() {
-    var fields = $('#siblingsForm input');
+var getSiblings = function(user) {
+    var fields = $('#siblingsForm').find('input');
     var siblings = [];
 
     $.each(fields, function(i, field) {
-        var sibling = new Sibling({name: $(field).val()});
+        var sibling = new Sibling();
+        sibling.set('name', $(field).val());
+        sibling.set('user', user);
+
         siblings.push(sibling);
     });
 
