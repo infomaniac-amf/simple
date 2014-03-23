@@ -7,4 +7,4 @@ header('Content-Type: application/x-amf');
 http_response_code(200);
 
 $user = amf_decode($input);
-echo amf_encode($user);
+echo amf_encode($user, AMF_CLASS_MAPPING);

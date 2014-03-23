@@ -7,36 +7,46 @@ $(function () {
     $('button.json').click(submitJSON);
 });
 
-var displayInfo = function (response) {
-    var data = {};
-    $.each(response, function (i, element) {
-        data[element.name] = element.value;
-    });
-
+var displayInfo = function (user) {
     var infoBox = $('#infoBox');
-    var text = data.firstName + ' ' + data.lastName + ' has signed up with an email address of ' + data.emailAddress
-        + '. ' + (data.gender == 'male' ? 'He' : 'She') + ' has '
-        + (data.spamMe ? '' : 'not') + ' agreed to be spammed.';
+    var text = user.get('firstName') + ' ' + user.get('lastName')
+        + ' has signed up with an email address of ' + user.get('emailAddress')
+        + '. ' + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
+        + (user.get('spamMe') ? '' : 'not') + ' agreed to be spammed.';
 
     infoBox.text(text);
     infoBox.show();
+};
+
+var getUserData = function () {
+    var user = new User();
+    user.set('firstName', $('#firstName').val());
+    user.set('lastName', $('#lastName').val());
+    user.set('emailAddress', $('#emailAddress').val());
+    user.set('password', $('#password').val());
+    user.set('spamMe', $('#spamMe').is(':checked'));
+    user.set('gender', $('input[name="gender"]:checked').val());
+
+    return user;
 };
 
 /**
  * Submit form as JSON
  */
 var submitJSON = function () {
+    var user = getUserData();
+
     $('#infoBox').hide();
     $('#infoBox').text('');
 
     $.ajax({
-        data: JSON.stringify($('#registrationForm').serializeArray()),
+        data: user.exportData(),
         url: '/server/json.php',
         dataType: 'json',
         contentType: 'text/json',
         type: 'POST',
         success: function (responseData) {
-            displayInfo(responseData);
+            displayInfo(new User(responseData));
         }
     });
 };
@@ -45,6 +55,8 @@ var submitJSON = function () {
  * Submit form as AMF
  */
 var submitAMF = function () {
+    var user = getUserData();
+
     $('#infoBox').hide();
     $('#infoBox').text('');
 
@@ -60,7 +72,7 @@ var submitAMF = function () {
     };
 
     $.ajax({
-        data: AMF.stringify($('#registrationForm').serializeArray()),
+        data: AMF.stringify(user, AMF.CLASS_MAPPING),
         processData: false,
         url: '/server/amf.php',
         type: 'POST',
