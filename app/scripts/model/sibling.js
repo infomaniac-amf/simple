@@ -8,9 +8,9 @@ var Sibling = function (params) {
 Sibling.prototype = new Model();
 Sibling.prototype.constructor = Sibling;
 Sibling.prototype._classMapping = 'Simple\\Sibling';
-Sibling.prototype.properties = {
+$.extend(Sibling.prototype, {
     name: null,
     user: null
-};
+});
 
 AMF.registerClassAlias('Simple\\Sibling', Sibling);

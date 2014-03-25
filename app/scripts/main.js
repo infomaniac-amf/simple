@@ -16,17 +16,15 @@ $(function () {
 
 var displayInfo = function (user) {
     var infoBox = $('#infoBox');
-    var text = user.get('firstName') + ' ' + user.get('lastName')
-        + ' has signed up with an email address of ' + user.get('emailAddress')
-        + '. ' + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
-        + (user.get('spamMe') ? '' : 'not') + ' agreed to be spammed. '
-        + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
-        + user.get('siblings').length + ' siblings. Born on ' + user.get('birthday');
+    var text = user.firstName + ' ' + user.lastName
+        + ' has signed up with an email address of ' + user.emailAddress
+        + '. ' + (user.gender == 'male' ? 'He' : 'She') + ' has '
+        + (user.spamMe ? '' : 'not') + ' agreed to be spammed. '
+        + (user.gender == 'male' ? 'He' : 'She') + ' has '
+        + user.siblings.length + ' siblings. Born on ' + user.birthday;
 
     infoBox.text(text);
     infoBox.show();
-
-    console.log(user.get('birthday'));
 };
 
 var getBirthday = function() {
@@ -43,15 +41,15 @@ var getBirthday = function() {
 
 var getUserData = function () {
     var user = new User();
-    user.set('firstName', $('#firstName').val());
-    user.set('lastName', $('#lastName').val());
-    user.set('emailAddress', $('#emailAddress').val());
-    user.set('password', $('#password').val());
-    user.set('spamMe', $('#spamMe').is(':checked'));
-    user.set('gender', $('input[name="gender"]:checked').val());
-    user.set('birthday', getBirthday());
+    user.firstName = $('#firstName').val();
+    user.lastName = $('#lastName').val();
+    user.emailAddress = $('#emailAddress').val();
+    user.password = $('#password').val();
+    user.spamMe = $('#spamMe').is(':checked');
+    user.gender = $('input[name="gender"]:checked').val();
+    user.birthday = getBirthday();
 
-    user.set('siblings', getSiblings(user));
+    user.siblings = getSiblings(user);
 
     return user;
 };
@@ -62,8 +60,8 @@ var getSiblings = function(user) {
 
     $.each(fields, function(i, field) {
         var sibling = new Sibling();
-        sibling.set('name', $(field).val());
-        sibling.set('user', user);
+        sibling.name = $(field).val();
+        sibling.user = user;
 
         siblings.push(sibling);
     });

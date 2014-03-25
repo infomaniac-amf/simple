@@ -6,26 +6,19 @@ var Model = function(data) {
 };
 
 Model.prototype = {
-    properties: {},
-
-    set: function(name, value) {
-        if(!(name in this.properties)) {
-            debugger;
-            throw new Error('Undefined property: ' + name);
-        }
-        this.properties[name] = value;
-    },
-
-    get: function(name) {
-        if(!(name in this.properties)) {
-            throw new Error('Undefined property: ' + name);
-        }
-
-        return this.properties[name];
-    },
-
     exportData: function() {
-        return this.properties;
+        var exported = {};
+        for(var key in this) {
+            var value = this[key];
+
+            if(typeof value == 'function') {
+                continue;
+            }
+
+            exported[key] = value;
+        }
+
+        return exported;
     },
 
     importData: function(data) {
@@ -35,7 +28,7 @@ Model.prototype = {
 
         for(var key in data) {
             var value = data[key];
-            this.set(key, value);
+            this[key] = value;
         }
     }
 };
