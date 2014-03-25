@@ -8,15 +8,17 @@ var User = function (params) {
 User.prototype = new Model();
 User.prototype.constructor = User;
 User.prototype._classMapping = 'Simple\\User';
-User.prototype.properties = {
+
+$.extend(User.prototype, {
     firstName: null,
     lastName: null,
     emailAddress: null,
     password: null,
     spamMe: false,
     gender: null,
+    birthday: new Date(),
 
     siblings: []
-};
+});
 
 AMF.registerClassAlias('Simple\\User', User);
