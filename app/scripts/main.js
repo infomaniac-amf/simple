@@ -115,10 +115,12 @@ var submitAMF = function () {
     $.ajax({
         data: AMF.stringify(user, AMF.CLASS_MAPPING),
         processData: false,
+        beforeSend: function(xhr) {
+            xhr.overrideMimeType("application/x-amf; charset=x-user-defined");
+        },
         url: '/server/amf.php',
         type: 'POST',
         contentType: 'application/x-amf',
-        mimeType: 'application/x-amf; charset:x-user-defined',
         success: function (responseData) {
             displayInfo(AMF.parse(responseData));
         }
