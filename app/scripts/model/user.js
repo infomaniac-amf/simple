@@ -16,7 +16,6 @@ $.extend(User.prototype, {
     password: null,
     spamMe: false,
     gender: null,
-    birthday: new Date(),
 
     siblings: []
 });

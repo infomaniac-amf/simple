@@ -63,7 +63,7 @@ var submitJSON = function () {
     $('#infoBox').text('');
 
     $.ajax({
-        data: user.exportData(),
+        data: JSON.stringify(user.exportData()),
         url: '/server/json.php',
         dataType: 'json',
         contentType: 'text/json',
