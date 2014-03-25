@@ -36,13 +36,13 @@ var getUserData = function () {
     user.spamMe = $('#spamMe').is(':checked');
     user.gender = $('input[name="gender"]:checked').val();
 
-    user.set('siblings', getSiblings());
+    user.siblings = getSiblings();
 
     return user;
 };
 
 var getSiblings = function() {
-    var fields = $('#siblingsForm input');
+    var fields = $('#siblingsForm').find('input');
     var siblings = [];
 
     $.each(fields, function(i, field) {

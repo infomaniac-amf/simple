@@ -2,7 +2,9 @@ var Model = function(data) {
     // constructor
     console.log('new model instance');
 
-    this.importData(data);
+    if(data) {
+        this.importData(data);
+    }
 };
 
 Model.prototype = {
