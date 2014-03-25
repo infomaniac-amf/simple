@@ -9,10 +9,10 @@ $(function () {
 
 var displayInfo = function (user) {
     var infoBox = $('#infoBox');
-    var text = user.get('firstName') + ' ' + user.get('lastName')
-        + ' has signed up with an email address of ' + user.get('emailAddress')
-        + '. ' + (user.get('gender') == 'male' ? 'He' : 'She') + ' has '
-        + (user.get('spamMe') ? '' : 'not') + ' agreed to be spammed.';
+    var text = user.firstName + ' ' + user.lastName
+        + ' has signed up with an email address of ' + user.emailAddress
+        + '. ' + (user.gender == 'male' ? 'He' : 'She') + ' has '
+        + (user.spamMe ? '' : 'not') + ' agreed to be spammed. ';
 
     infoBox.text(text);
     infoBox.show();
@@ -20,12 +20,12 @@ var displayInfo = function (user) {
 
 var getUserData = function () {
     var user = new User();
-    user.set('firstName', $('#firstName').val());
-    user.set('lastName', $('#lastName').val());
-    user.set('emailAddress', $('#emailAddress').val());
-    user.set('password', $('#password').val());
-    user.set('spamMe', $('#spamMe').is(':checked'));
-    user.set('gender', $('input[name="gender"]:checked').val());
+    user.firstName = $('#firstName').val();
+    user.lastName = $('#lastName').val();
+    user.emailAddress = $('#emailAddress').val();
+    user.password = $('#password').val();
+    user.spamMe = $('#spamMe').is(':checked');
+    user.gender = $('input[name="gender"]:checked').val();
 
     return user;
 };
@@ -74,10 +74,12 @@ var submitAMF = function () {
     $.ajax({
         data: AMF.stringify(user, AMF.CLASS_MAPPING),
         processData: false,
+        beforeSend: function(xhr) {
+            xhr.overrideMimeType("application/x-amf; charset=x-user-defined");
+        },
         url: '/server/amf.php',
         type: 'POST',
         contentType: 'application/x-amf',
-        mimeType: 'application/x-amf; charset:x-user-defined',
         success: function (responseData) {
             displayInfo(AMF.parse(responseData));
         }
